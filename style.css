@@ -1,0 +1,65 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 5rem 1rem;
+  padding: 0;
+  max-height: 600px;
+  background-color: rgb(1, 104, 1);
+}
+
+.tablero {
+  border: 1px solid black;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  background: rgb(1, 104, 1);
+  place-items: center;
+}
+
+.puntuacion {
+  width: 100%;
+  background-color: white;
+  color: red;
+  margin: 1rem;
+  text-align: center;
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+.mensaje {
+  background-color: red;
+  text-align: center;
+  font-size: larger;
+  line-height: 2;
+  width: max-content;
+}
+
+.carta {
+  padding: 2rem;
+}
+
+button {
+  text-decoration: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  margin: 5rem;
+}
+
+.boton_nueva_partida {
+  border: black 1rem solid;
+  font-size: 2rem;
+  color: black;
+}
+
+button:hover {
+  color: red;
+  font-style: italic;
+  text-shadow: 1px gray;
+}
