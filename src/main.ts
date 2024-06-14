@@ -56,6 +56,7 @@ const boton_pedir_carta = document.getElementById("pedir_carta");
 const muestraCartaPorDefecto = () => {
     if (carta_img_element instanceof HTMLImageElement) {
         carta_img_element.src = "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/" + carta_boca_abajo;
+        console.log(cartas_folder + carta_boca_abajo);
     }
 };
 
@@ -131,6 +132,8 @@ const sumarPuntuacion = (carta: number) => {
         }
     }
     
+    
+    console.log(puntuacion + puntuacionCarta);
     puntuacion += puntuacionCarta;
     muestraPuntuacion();
 };
@@ -164,6 +167,7 @@ const creaBotonNuevaPartida = () => {
     nueva_partida_boton.onclick = () => creaNuevaPartida();
 
     // Añadiendo el botón nueva partida en pantalla
+    console.log("Creando botón nueva partida");
     body_element?.appendChild(nueva_partida_boton);
 };
 
@@ -176,57 +180,78 @@ const mostrarCarta = (carta: number) : void => {
     // Devolver carta aleatoria
     switch (carta) {
         case 1: {
+            console.log("Carta 1.");
+            console.log(ruta_carta);
             ruta_carta = cartas_folder + as_copas;
             break;
         }
 
         case 2: {
+            console.log("Carta 2.");
+            console.log(ruta_carta);
             ruta_carta = cartas_folder + dos_copas;
             break;
         }
 
         case 3: {
+            console.log("Carta 3.");
+            console.log(ruta_carta);
             ruta_carta = cartas_folder + tres_copas;
             break;
         }
 
         case 4: {
+            console.log("Carta 4.");
+            console.log(ruta_carta);
             ruta_carta = cartas_folder + cuatro_copas;
             break;
         }
 
         case 5: {
+            console.log("Carta 5.");
+            console.log(ruta_carta);
             ruta_carta = cartas_folder + cinco_copas;
             break;
         }
 
         case 6: {
+            console.log("Carta 6.");
+            console.log(ruta_carta);
             ruta_carta = cartas_folder + seis_copas;
             break;
         }
 
         case 7: {
+            console.log("Carta 7.");
+            console.log(ruta_carta);
             ruta_carta = cartas_folder + siete_copas;
             break;
         }
 
         case 10: {
+            console.log("Sota.");
+            console.log(ruta_carta);
             ruta_carta = cartas_folder + sota_copas;
             break;
         }
 
         case 11: {
+            console.log("Caballo.");
+            console.log(ruta_carta);
             ruta_carta = cartas_folder + caballo_copas;
             break;
         }
 
         case 12: {
+            console.log("Rey.");
+            console.log(ruta_carta);
             ruta_carta = cartas_folder + rey_copas;
             break;
         }
 
         default: {
-            ruta_carta = "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/" + carta_boca_abajo;;
+            ruta_carta = "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/" + carta_boca_abajo;
+            console.log(ruta_carta);
             break;
         }
     };
@@ -295,7 +320,8 @@ const plantarse = () => {
 
 
 const creaNuevaPartida = () => {
-
+    
+    console.log("Creando nueva partida");
     
     if (boton_pedir_carta instanceof HTMLButtonElement && mePlantoBoton instanceof HTMLButtonElement) {
         boton_pedir_carta.disabled = false;
