@@ -3,32 +3,28 @@
 }
 
 body {
+  border: 4px blue solid;
   display: flex;
+  height: 100%;
   flex-direction: column;
-  justify-content: center;
   margin: 5rem 1rem;
   padding: 0;
-  max-height: 600px;
   background-color: rgb(1, 104, 1);
 }
 
-.tablero {
-  border: 1px solid black;
-  margin: 0;
-  display: flex;
-  flex-direction: row;
-  background: rgb(1, 104, 1);
-  place-items: center;
+.tablero-display {
+  border: 1px solid purple;
+  margin: .5rem;
 }
 
 .puntuacion {
-  width: 100%;
+  margin: .5rem;
+  height: fit-content;
+  color: red;
   -webkit-text-stroke: 2px white;
   text-transform: uppercase;
-  font-weight: bolder;
-  color: red;
-  margin: 1rem;
   text-align: center;
+  font-weight: bolder;
   font-size: 3.2em;
   line-height: 1.1;
 }
@@ -42,16 +38,33 @@ body {
 }
 
 .carta {
-  padding: 2rem;
+  margin: .5rem;
+  height: 500px;
+  border-top: 3px white solid;
+  border-bottom: 3px white solid;
+  border-left: 4px white solid;
+  border-right: 4px white solid;
+}
+
+.contenedor_botones {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 1rem;
+  margin: .5rem;
+  width: fit-content;
+  border: 1px solid orange;
 }
 
 button {
-  text-decoration: none;
-  background: none;
   border: none;
   color: white;
+  margin: .5rem;
+  width: 200px;
+  text-decoration: none;
+  background: none;
   font-size: 2rem;
-  margin: 5rem;
+  border: white 1px solid;
 }
 
 .boton_nueva_partida {

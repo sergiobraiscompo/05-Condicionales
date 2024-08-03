@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", muestraPuntuacion);
 
 // Suma la puntuación de la carta
 const sumarPuntuacion = (carta: number) => {
-    let puntuacionCarta = 0;
+    let puntuacionCarta: number = 0;
 
     // Gestiona la puntuación en base a la carta
     switch (carta) {
@@ -138,22 +138,24 @@ const sumarPuntuacion = (carta: number) => {
     muestraPuntuacion();
 };
 
+let partidaAcabada: boolean = false;
 
 const gameOver = () => {
-    let  mensaje = "";
+    let  mensaje: string = "";
     
     if (boton_pedir_carta instanceof HTMLButtonElement && mePlantoBoton instanceof HTMLButtonElement) {
         boton_pedir_carta.disabled = true
         mePlantoBoton.disabled = true
+        creaBotonQueHabriaPasado();
     };
     
-    if (mensaje_element) {
+    if (mensaje_element && !partidaAcabada) {
         mensaje = "Has hecho más de 7 puntos y medio, partida terminada.";
+        partidaAcabada = true;
         mensaje_element.innerHTML = mensaje;
     }
 
     creaBotonNuevaPartida();
-    
 };
 
 
@@ -171,6 +173,26 @@ const creaBotonNuevaPartida = () => {
     body_element?.appendChild(nueva_partida_boton);
 };
 
+
+// Crea botón queHabriaPasado
+const creaBotonQueHabriaPasado = () => {
+    const que_habria_pasado_boton = document.createElement("button");
+
+    que_habria_pasado_boton.innerText = "¿Qué habría pasado?";
+    que_habria_pasado_boton.id = "boton_que_habria_pasado";
+    que_habria_pasado_boton.className = "boton_que_habria_pasado";
+    que_habria_pasado_boton.onclick = () => queHabriaPasado();
+
+    // Añadiendo el botón nueva partida en pantalla
+    console.log("Creando botón queHabriaPasado");
+    body_element?.appendChild(que_habria_pasado_boton);
+};
+
+// Función para ver las siguientes cartas tras terminar la partida
+const queHabriaPasado = () => {
+    dameCarta();
+    console.log("Click botón queHabriaPasado.")
+}
 
 // Muestra la carta actual
 const mostrarCarta = (carta: number) : void => {
@@ -284,7 +306,7 @@ const dameCarta = () => {
 
     mostrarCarta(nuevo_numero);
     sumarPuntuacion(nuevo_numero);
-    if (puntuacion > 7.5){
+    if (puntuacion > 7.5 && !partidaAcabada) {
         gameOver();
     }
 };
@@ -314,15 +336,13 @@ const plantarse = () => {
     if (mensaje_element) {
         mensaje_element.innerHTML = mensaje;
     }
-
-    creaBotonNuevaPartida;
 };
 
 
 const creaNuevaPartida = () => {
     
     console.log("Creando nueva partida");
-    
+    // TODO: Añadir función para eliminar botones creaNuevaPartida + queHabriaPasado
     if (boton_pedir_carta instanceof HTMLButtonElement && mePlantoBoton instanceof HTMLButtonElement) {
         boton_pedir_carta.disabled = false;
         mePlantoBoton.disabled = false;
@@ -342,6 +362,11 @@ const handle_click = (boton: string) => {
         }
         case "mePlanto": {
             plantarse();
+            break;
+        }
+        case "queHabriaPasado": {
+            queHabriaPasado();
+            break;
         }
     }
 };
@@ -353,3 +378,7 @@ pedirCartaBoton?.addEventListener("click", () => handle_click("pedirCarta"));
 // Botón mePlanto
 const mePlantoBoton = document.getElementById("me_planto");
 mePlantoBoton?.addEventListener("click", () => handle_click("mePlanto"));
+
+// Botón queHabriaPasado
+const queHabriaPasadoBoton = document.getElementById("que_habria_pasado");
+queHabriaPasadoBoton?.addEventListener("click", () => handle_click("queHabriaPasado"));
