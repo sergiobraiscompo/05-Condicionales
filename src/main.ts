@@ -1,3 +1,5 @@
+
+
 let puntuacion = 0;
 let carta = 0;
 
@@ -45,11 +47,11 @@ const cartas_folder = "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplo
 // Elementos HTML
 const mensaje_element = document.getElementById("mensaje");
 const tablero_element = document.getElementById("tablero");
+const contenedor_botones_element = document.getElementById("contenedor-botones");
 const body_element = document.body;
 
 // Botones de la web
 const nueva_partida_boton = document.getElementById("nueva_partida");
-
 const boton_pedir_carta = document.getElementById("pedir_carta");
 
 
@@ -145,7 +147,10 @@ const gameOver = () => {
     
     if (boton_pedir_carta instanceof HTMLButtonElement && mePlantoBoton instanceof HTMLButtonElement) {
         boton_pedir_carta.disabled = true
+        boton_pedir_carta.className = "disabled-button";
+
         mePlantoBoton.disabled = true
+        mePlantoBoton.className = "disabled-button";
         creaBotonQueHabriaPasado();
     };
     
@@ -164,13 +169,13 @@ const creaBotonNuevaPartida = () => {
     const nueva_partida_boton = document.createElement("button");
 
     nueva_partida_boton.innerText = "Nueva Partida";
-    nueva_partida_boton.id = "boton_nueva_partida";
-    nueva_partida_boton.className = "boton_nueva_partida";
+    nueva_partida_boton.id = "boton-nueva-partida";
+    nueva_partida_boton.className = "boton-nueva-partida";
     nueva_partida_boton.onclick = () => creaNuevaPartida();
 
     // Añadiendo el botón nueva partida en pantalla
     console.log("Creando botón nueva partida");
-    body_element?.appendChild(nueva_partida_boton);
+    contenedor_botones_element?.appendChild(nueva_partida_boton);
 };
 
 
@@ -179,19 +184,18 @@ const creaBotonQueHabriaPasado = () => {
     const que_habria_pasado_boton = document.createElement("button");
 
     que_habria_pasado_boton.innerText = "¿Qué habría pasado?";
-    que_habria_pasado_boton.id = "boton_que_habria_pasado";
-    que_habria_pasado_boton.className = "boton_que_habria_pasado";
+    que_habria_pasado_boton.id = "boton-que-habria-pasado";
+    que_habria_pasado_boton.className = "boton-que-habria-pasado";
     que_habria_pasado_boton.onclick = () => queHabriaPasado();
 
     // Añadiendo el botón nueva partida en pantalla
     console.log("Creando botón queHabriaPasado");
-    body_element?.appendChild(que_habria_pasado_boton);
+    contenedor_botones_element?.appendChild(que_habria_pasado_boton);
 };
 
 // Función para ver las siguientes cartas tras terminar la partida
 const queHabriaPasado = () => {
     dameCarta();
-    console.log("Click botón queHabriaPasado.")
 }
 
 // Muestra la carta actual
@@ -340,13 +344,29 @@ const plantarse = () => {
 
 
 const creaNuevaPartida = () => {
-    
-    console.log("Creando nueva partida");
-    // TODO: Añadir función para eliminar botones creaNuevaPartida + queHabriaPasado
+    const boton_nueva_partida = document.getElementById("boton-nueva-partida");
+    const boton_que_habria_pasasdo = document.getElementById("boton-que-habria-pasado");
+
+
+    // Habilita y cambia de nuevo la clase a "button" a los botones Pedir carta y me planto
     if (boton_pedir_carta instanceof HTMLButtonElement && mePlantoBoton instanceof HTMLButtonElement) {
         boton_pedir_carta.disabled = false;
+        boton_pedir_carta.className = "button";
+        
         mePlantoBoton.disabled = false;
+        mePlantoBoton.className = "button";
     }
+
+    // Elimina los botones nueva partida y que habria pasado
+    if (boton_nueva_partida instanceof HTMLButtonElement && boton_que_habria_pasasdo instanceof HTMLButtonElement) {
+        boton_nueva_partida.remove();
+        boton_que_habria_pasasdo.remove();
+    }
+
+
+    // Vacía el campo del mensaje
+    if (mensaje_element instanceof HTMLDivElement)
+    mensaje_element.innerHTML = "";
 
     puntuacion = 0;
     muestraPuntuacion();
@@ -378,7 +398,3 @@ pedirCartaBoton?.addEventListener("click", () => handle_click("pedirCarta"));
 // Botón mePlanto
 const mePlantoBoton = document.getElementById("me_planto");
 mePlantoBoton?.addEventListener("click", () => handle_click("mePlanto"));
-
-// Botón queHabriaPasado
-const queHabriaPasadoBoton = document.getElementById("que_habria_pasado");
-queHabriaPasadoBoton?.addEventListener("click", () => handle_click("queHabriaPasado"));
