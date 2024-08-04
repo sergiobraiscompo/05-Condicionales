@@ -47,11 +47,12 @@ const cartas_folder = "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplo
 // Elementos HTML
 const mensaje_element = document.getElementById("mensaje");
 const tablero_element = document.getElementById("tablero");
+const puntuacion_element = document.getElementById("puntuacion");
 const contenedor_botones_element = document.getElementById("contenedor-botones");
-const body_element = document.body;
 
 // Botones de la web
-const nueva_partida_boton = document.getElementById("nueva_partida");
+const boton_nueva_partida = document.getElementById("boton-nueva-partida");
+const boton_que_habria_pasasdo = document.getElementById("boton-que-habria-pasado");
 const boton_pedir_carta = document.getElementById("pedir_carta");
 
 
@@ -67,7 +68,6 @@ document.addEventListener("DOMContentLoaded", muestraCartaPorDefecto);
 
 // Función mostrar puntuación
 const muestraPuntuacion = () => {
-    const puntuacion_element = document.getElementById("puntuacion");
     
     if (puntuacion_element) {
         puntuacion_element.innerHTML =  "Puntuación: "+ puntuacion.toString();
@@ -342,11 +342,8 @@ const plantarse = () => {
     }
 };
 
-
+// Crea una nueva partida
 const creaNuevaPartida = () => {
-    const boton_nueva_partida = document.getElementById("boton-nueva-partida");
-    const boton_que_habria_pasasdo = document.getElementById("boton-que-habria-pasado");
-
 
     // Habilita y cambia de nuevo la clase a "button" a los botones Pedir carta y me planto
     if (boton_pedir_carta instanceof HTMLButtonElement && mePlantoBoton instanceof HTMLButtonElement) {
