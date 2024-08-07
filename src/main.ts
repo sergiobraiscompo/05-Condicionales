@@ -135,24 +135,18 @@ const sumarPuntuacion = (carta: number) => {
 let partidaAcabada: boolean = false;
 
 const gameOver = () => {
-    let  mensaje: string = "";
+    console.log("Entrando en game over");
     
     if (boton_pedir_carta instanceof HTMLButtonElement && boton_me_planto instanceof HTMLButtonElement) {
         boton_pedir_carta.disabled = true
         boton_pedir_carta.className = "disabled-button";
-
+        
         boton_me_planto.disabled = true
         boton_me_planto.className = "disabled-button";
         creaBotonQueHabriaPasado();
-    };
-    
-    if (mensaje_element && !partidaAcabada) {
-        mensaje = "Has hecho más de 7 puntos y medio, partida terminada.";
+        creaBotonNuevaPartida();
         partidaAcabada = true;
-        mensaje_element.innerHTML = mensaje;
-    }
-
-    creaBotonNuevaPartida();
+    };  
 };
 
 
@@ -190,7 +184,6 @@ const queHabriaPasado = () => {
 
 // Muestra la carta actual
 const mostrarCarta = (carta: number) : void => {
-
     let ruta_carta = "";
 
     // Devolver carta aleatoria
@@ -279,6 +272,10 @@ const dameCarta = () => {
 
     mostrarCarta(nuevo_numero);
     sumarPuntuacion(nuevo_numero);
+    console.log("Puntuación actual = ", puntuacion)
+    console.log("la puntuación es mayor a 7.5", puntuacion>7.5)
+
+    //  Mientras la partida siga en curso se ejectua gameOver
     if (puntuacion > 7.5 && !partidaAcabada) {
         gameOver();
     }
@@ -287,8 +284,8 @@ const dameCarta = () => {
 
 // Llama a gameover y muestra un mensaje en pantalla
 const plantarse = () => {
-    let mensaje = "";
     gameOver();
+    let mensaje = "";
 
     if (puntuacion === 7.5){
         mensaje = "¡Lo has clavado! ¡Enhorabuena!";
@@ -301,7 +298,7 @@ const plantarse = () => {
     if (puntuacion === 5){
         mensaje = "Te ha entrado el canguelo eh?";
     }
-
+    
     if (puntuacion <= 4){
         mensaje = "Has sido muy conservador";
     }
@@ -309,6 +306,7 @@ const plantarse = () => {
     if (mensaje_element) {
         mensaje_element.innerHTML = mensaje;
     }
+    
 };
 
 // Crea una nueva partida
@@ -340,6 +338,7 @@ const creaNuevaPartida = () => {
     puntuacion = 0;
     muestraPuntuacion();
     muestraCartaPorDefecto();
+    partidaAcabada = false;
 };
 
 // Gestionar click
