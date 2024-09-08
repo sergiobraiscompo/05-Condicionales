@@ -76,7 +76,7 @@ button {
 button:hover {
   color: red;
   font-style: italic;
-  text-shadow: 1px gray;
+  text-shadow: 10px 8px 2px gray;
 }
 
 .disabled-button {
@@ -85,9 +85,13 @@ button:hover {
 }
 
 .disabled-button:hover {
+  text-decoration: none;
+}
+
+.disabled-button:hover {
   color: gray;
   text-decoration: line-through;
   font-weight: bolder;
   font-style: italic;
-  text-shadow: 1px gray;
+  text-shadow: 10px 1px 2px gray;
 }

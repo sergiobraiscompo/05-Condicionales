@@ -134,9 +134,7 @@ const sumarPuntuacion = (carta: number) => {
 
 let partidaAcabada: boolean = false;
 
-const gameOver = () => {
-    console.log("Entrando en game over");
-    
+const gameOver = () => {    
     if (boton_pedir_carta instanceof HTMLButtonElement && boton_me_planto instanceof HTMLButtonElement) {
         boton_pedir_carta.disabled = true
         boton_pedir_carta.className = "disabled-button";
@@ -272,8 +270,6 @@ const dameCarta = () => {
 
     mostrarCarta(nuevo_numero);
     sumarPuntuacion(nuevo_numero);
-    console.log("Puntuación actual = ", puntuacion)
-    console.log("la puntuación es mayor a 7.5", puntuacion>7.5)
 
     //  Mientras la partida siga en curso se ejectua gameOver
     if (puntuacion > 7.5 && !partidaAcabada) {
@@ -306,7 +302,6 @@ const plantarse = () => {
     if (mensaje_element) {
         mensaje_element.innerHTML = mensaje;
     }
-    
 };
 
 // Crea una nueva partida
