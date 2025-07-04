@@ -1,80 +1,76 @@
-
-
-let puntuacion = 0;
-let carta = 0;
-
-// Cartas del juego
-// AS de copas
-const asCopas = "1s-copas.jpg"
-
-// 2 de copas
-const dosCopas = "2os-copas.jpg"
-
-// 3 de copas
-const tresCopas = "3res-copas.jpg"
-
-// 4 de copas
-const cuatroCopas = "4Cuatro-copas.jpg"
-
-// 5 de copas
-const cincoCopas = "5Cinco-copas.jpg"
-
-// 6 de copas
-const seisCopas = "6eis-copas.jpg"
-
-// 7 de copas
-const sieteCopas = "7iete-copas.jpg"
-
-// Sota de copas
-const sotaCopas = "10ota-copas.jpg"
-
-// Caballo de copas
-const caballoCopas = "11Caballo-copas.jpg"
-
-// Rey de copas
-const reyCopas = "12ey-copas.jpg";
-
-// CartaBocabajo
-const cartaBocaAbajo = "back.jpg";
-
-// Elemento imagen carta HTML
-const cartaImgElement = document.getElementById("carta");
-
-// Carpeta de imágenes
-const cartasFolder = "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/";
-
-
 // Elementos HTML
 const mensajeElement = document.getElementById("mensaje");
 const tableroElement = document.getElementById("tablero");
 const puntuacionElement = document.getElementById("puntuacion");
 const contenedorBotonesElement = document.getElementById("contenedor-botones");
 
+// Elemento imagen carta HTML
+const cartaImgElement = document.getElementById("carta");
 
-const muestraCartaPorDefecto = () => {
-    if (cartaImgElement instanceof HTMLImageElement) {
-        cartaImgElement.src = "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/" + cartaBocaAbajo;
+// Botón pedir carta
+const botonPedirCarta = document.getElementById("pedir_carta");
+
+// Botón mePlanto
+const botonMePlanto = document.getElementById("me_planto");
+
+// Baraja de cartas
+const cartas = [
+    "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/back.jpg",
+    "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/1_as-copas.jpg",
+    "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/2_dos-copas.jpg",
+    "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/3_tres-copas.jpg",
+    "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/4_cuatro-copas.jpg",
+    "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/5_cinco-copas.jpg",
+    "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/6_seis-copas.jpg",
+    "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/7_siete-copas.jpg",
+    "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/10_sota-copas.jpg",
+    "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/11_caballo-copas.jpg",
+    "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/12_rey-copas.jpg"
+]
+
+document.addEventListener("DOMContentLoaded", () => {
+    muestraCartaPorDefecto();
+    muestraPuntuacion();
+});
+
+// Objeto Partida
+interface Partida {
+    puntuacion: number;
+    carta: number;
+    mensaje: string;
+    partidaAcabada: boolean
+}
+
+// Nueva partida
+const partida: Partida = {
+    puntuacion: 0,
+    carta: 0,
+    mensaje: "",
+    partidaAcabada: false
+}
+
+
+// Carpeta de imágenes
+const cartas_folder = "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/";
+
+const gameOver = () => {
+    if (botonPedirCarta instanceof HTMLButtonElement && botonMePlanto instanceof HTMLButtonElement) {
+        deshabilitaBotonesPartida();
+        creaBotonQueHabriaPasado();
+        creaBotonNuevaPartida();
+    };
+    
+    if (mensajeElement && !partida.partidaAcabada) {
+        partida.partidaAcabada = true;
     }
+
 };
-
-document.addEventListener("DOMContentLoaded", muestraCartaPorDefecto);
-
-
-// Función mostrar puntuación
-const muestraPuntuacion = () => {  
-    if (puntuacionElement) {
-        puntuacionElement.innerHTML =  "Puntuación: "+ puntuacion.toString();
-    }
-};
-
-document.addEventListener("DOMContentLoaded", muestraPuntuacion);
-
 
 // Suma la puntuación de la carta
 const sumarPuntuacion = (carta: number) => {
-    let puntuacionCarta: number = 0;
+    let puntuacionCarta = 0;
 
-    // Gestiona la puntuación en base a la carta
+   // Devualve el valor de la carta
     switch (carta) {
         case 1: {
             puntuacionCarta = 1;
@@ -126,139 +122,9 @@ const sumarPuntuacion = (carta: number) => {
             break;
         }
     }
-    
-    
-    puntuacion += puntuacionCarta;
+
+    partida.puntuacion += puntuacionCarta;
     muestraPuntuacion();
-};
-
-let partidaAcabada: boolean = false;
-
-const gameOver = () => {    
-    if (botonPedirCarta instanceof HTMLButtonElement && botonMePlanto instanceof HTMLButtonElement) {
-        botonPedirCarta.disabled = true
-        botonPedirCarta.className = "disabled-button";
-        
-        botonMePlanto.disabled = true
-        botonMePlanto.className = "disabled-button";
-        creaBotonQueHabriaPasado();
-        creaBotonNuevaPartida();
-        partidaAcabada = true;
-    };  
-};
-
-
-// Crea el botón nueva partida
-const creaBotonNuevaPartida = () => {
-    const nuevaPartidaBoton = document.createElement("button");
-
-    nuevaPartidaBoton.innerText = "Nueva Partida";
-    nuevaPartidaBoton.id = "boton-nueva-partida";
-    nuevaPartidaBoton.className = "boton-nueva-partida";
-    nuevaPartidaBoton.onclick = () => creaNuevaPartida();
-
-    // Añadiendo el botón nueva partida en pantalla
-    contenedorBotonesElement?.appendChild(nuevaPartidaBoton);
-};
-
-
-// Crea botón queHabriaPasado
-const creaBotonQueHabriaPasado = () => {
-    const queHabriaPasadoBoton = document.createElement('button');
-
-    queHabriaPasadoBoton.innerText = "¿Qué habría pasado?";
-    queHabriaPasadoBoton.id = "boton-que-habria-pasado";
-    queHabriaPasadoBoton.className = "boton-que-habria-pasado";
-    queHabriaPasadoBoton.onclick = () => queHabriaPasado();
-
-    // Añadiendo el botón nueva partida en pantalla
-    contenedorBotonesElement?.appendChild(queHabriaPasadoBoton);
-};
-
-// Función para ver las siguientes cartas tras terminar la partida
-const queHabriaPasado = () => {
-    dameCarta();
-}
-
-// Muestra la carta actual
-const mostrarCarta = (carta: number) : void => {
-    let rutaCarta = "";
-
-    // Devolver carta aleatoria
-    switch (carta) {
-        case 1: {
-            rutaCarta = cartasFolder + asCopas;
-            break;
-        }
-
-        case 2: {
-            rutaCarta = cartasFolder + dosCopas;
-            break;
-        }
-
-        case 3: {
-            rutaCarta = cartasFolder + tresCopas;
-            break;
-        }
-
-        case 4: {
-            rutaCarta = cartasFolder + cuatroCopas;
-            break;
-        }
-
-        case 5: {
-            rutaCarta = cartasFolder + cincoCopas;
-            break;
-        }
-
-        case 6: {
-            rutaCarta = cartasFolder + seisCopas;
-            break;
-        }
-
-        case 7: {
-            rutaCarta = cartasFolder + sieteCopas;
-            break;
-        }
-
-        case 10: {
-            rutaCarta = cartasFolder + sotaCopas;
-            break;
-        }
-
-        case 11: {
-            rutaCarta = cartasFolder + caballoCopas;
-            break;
-        }
-
-        case 12: {
-            rutaCarta = cartasFolder + reyCopas;
-            break;
-        }
-
-        default: {
-            rutaCarta = "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/" + cartaBocaAbajo;
-            break;
-        }
-    };
-
-    // Condicional que comprueba que los elementos sean instancias de HTMLImageElement
-    if (cartaImgElement instanceof HTMLImageElement) {
-            cartaImgElement.src = rutaCarta;
-    }
-};
-
-
-// Generar carta aleatoria
-const cartaAleatoria = (): number => {
-    let generarNumero = Math.floor(Math.random() * (12 - 1));
-    if (generarNumero != 0){
-        return generarNumero > 7
-            ? generarNumero + 2
-            : generarNumero;
-    } else {
-        return generarNumero + 1;
-    }
 };
 
 
@@ -271,8 +137,9 @@ const dameCarta = () => {
     mostrarCarta(nuevoNumero);
     sumarPuntuacion(nuevoNumero);
 
-    //  Mientras la partida siga en curso se ejectua gameOver
-    if (puntuacion > 7.5 && !partidaAcabada) {
+    if (mensajeElement && partida.puntuacion > 7.5 && !partida.partidaAcabada) {
+        partida.mensaje = "Has hecho más de 7 puntos y medio, partida terminada.";
+        muestraMensaje(); 
         gameOver();
     }
 };
@@ -281,31 +148,143 @@ const dameCarta = () => {
 // Llama a gameover y muestra un mensaje en pantalla
 const plantarse = () => {
     gameOver();
-    let mensaje = "";
 
-    if (puntuacion === 7.5){
-        mensaje = "¡Lo has clavado! ¡Enhorabuena!";
+    if (partida.puntuacion === 7.5) {
+        partida.mensaje = "¡Lo has clavado! ¡Enhorabuena!";
     }
 
-    if (puntuacion === 6 || puntuacion === 7){
-        mensaje = "Casi casi ...";
+    if (partida.puntuacion === 6 || partida.puntuacion === 7) {
+        partida.mensaje = "Casi casi ...";
     }
 
-    if (puntuacion === 5){
-        mensaje = "Te ha entrado el canguelo eh?";
+    if (partida.puntuacion === 5) {
+        partida.mensaje = "Te ha entrado el canguelo eh?";
     }
-    
-    if (puntuacion <= 4){
-        mensaje = "Has sido muy conservador";
+
+    if (partida.puntuacion <= 4) {
+        partida.mensaje = "Has sido muy conservador";
     }
 
     if (mensajeElement) {
-        mensajeElement.innerHTML = mensaje;
+        mensajeElement.innerHTML = partida.mensaje;
+    }
+};
+
+// Generar carta aleatoria
+const cartaAleatoria = (): number => {
+    let generarNumero = Math.floor(Math.random() * (12 - 1));
+
+    if (generarNumero != 0) {
+        return generarNumero > 7
+            ? generarNumero + 2
+            : generarNumero;
+    } else {
+        return generarNumero + 1;
     }
 };
 
 // Crea una nueva partida
 const creaNuevaPartida = () => {
+    partida.puntuacion = 0,
+    partida.carta = 0,
+    partida.mensaje = "",
+    partida.partidaAcabada = false
+    
+    muestraMensaje();
+    reiniciaBotones();
+    muestraPuntuacion();
+    muestraCartaPorDefecto();
+};
+
+const eventos = () => {
+    if (
+        botonPedirCarta && botonPedirCarta != undefined && botonPedirCarta != null 
+        && botonMePlanto && botonMePlanto != undefined && botonMePlanto != null
+    ) {
+        console.log("eventos cargados")
+        botonPedirCarta.addEventListener("click", () => dameCarta());
+        botonMePlanto.addEventListener("click", () => plantarse());
+    }
+}
+
+// Muestra la parte trasera de las cartas
+const muestraCartaPorDefecto = () => {
+    if (cartaImgElement instanceof HTMLImageElement) {
+        cartaImgElement.src = cartas[0];
+    }
+};
+
+// Función mostrar puntuación
+const muestraPuntuacion = () => {
+    if (puntuacionElement) {
+        puntuacionElement.innerHTML =  "Puntuación: "+ partida.puntuacion.toString();
+    }
+};
+
+// Función mostrar puntuación
+const muestraMensaje = () => {
+    if (mensajeElement) {
+        mensajeElement.innerHTML =  partida.mensaje;
+    }
+};
+
+
+// Crea el botón nueva partida
+const creaBotonNuevaPartida = () => {
+    const nuevaPartidaBoton = document.createElement("button");
+    nuevaPartidaBoton.innerText = "Nueva Partida";
+    nuevaPartidaBoton.id = "boton-nueva-partida";
+    nuevaPartidaBoton.className = "boton-nueva-partida";
+    nuevaPartidaBoton.onclick = () => creaNuevaPartida();
+
+    // Añadiendo el botón nueva partida en pantalla
+    contenedorBotonesElement?.appendChild(nuevaPartidaBoton);
+};
+
+
+// Crea botón queHabriaPasado
+const creaBotonQueHabriaPasado = () => {
+    const queHabriaPasadoBoton = document.createElement("button");
+
+    queHabriaPasadoBoton.innerText = "¿Qué habría pasado?";
+    queHabriaPasadoBoton.id = "boton-que-habria-pasado";
+    queHabriaPasadoBoton.className = "boton-que-habria-pasado";
+    queHabriaPasadoBoton.onclick = () => dameCarta();
+
+    // Añadiendo el botón nueva partida en pantalla
+    if ( contenedorBotonesElement && contenedorBotonesElement != undefined && contenedorBotonesElement != null ) {
+        contenedorBotonesElement.appendChild(queHabriaPasadoBoton);
+    } else {
+        console.error("No se ha encontrado el elemento contenedorBotonesElement")
+    }
+};
+
+
+// Muestra la carta actual
+const mostrarCarta = (carta: number) : void => {
+    const rutaCarta = cartas[carta];
+
+    if (cartaImgElement instanceof HTMLImageElement) {
+        cartaImgElement.src = rutaCarta;
+    }
+};
+
+const deshabilitaBotonesPartida = () => {
+    if (botonPedirCarta instanceof HTMLButtonElement && botonMePlanto instanceof HTMLButtonElement) {
+        botonPedirCarta.disabled = true
+        botonPedirCarta.className = "disabled-button";
+
+        botonMePlanto.disabled = true
+        botonMePlanto.className = "disabled-button";
+    } else {
+        throw new Error("Ha ocurrido un problema al terminar la partida.");
+    }
+}
+
+
+const reiniciaBotones = () => {
+    const botonNuevaPartidaElement = document.getElementById("boton-nueva-partida");
+    const botonQueHabriaPasasdoElement = document.getElementById("boton-que-habria-pasado");
 
     // Habilita y cambia de nuevo la clase a "button" a los botones Pedir carta y me planto
     if (botonPedirCarta instanceof HTMLButtonElement && botonMePlanto instanceof HTMLButtonElement) {
@@ -316,48 +295,11 @@ const creaNuevaPartida = () => {
         botonMePlanto.className = "button";
     }
     
-    const botonNuevaPartida = document.getElementById("boton-nueva-partida");
-    const botonQueHabriaPasasdo = document.getElementById("boton-que-habria-pasado");
-    
     // Elimina los botones nueva partida y que habria pasado
-    if (botonNuevaPartida instanceof HTMLElement && botonQueHabriaPasasdo instanceof HTMLElement) {
-        botonQueHabriaPasasdo.remove();
-        botonNuevaPartida.remove();
+    if (botonNuevaPartidaElement instanceof HTMLButtonElement && botonQueHabriaPasasdoElement instanceof HTMLButtonElement) {
+        console.log("eliminando botones extra");
+        
+        botonNuevaPartidaElement.remove();
+        botonQueHabriaPasasdoElement.remove();
     }
-
-    // Vacía el campo del mensaje
-    if (mensajeElement instanceof HTMLDivElement){
-        mensajeElement.innerHTML = "";
-    }
-
-    puntuacion = 0;
-    muestraPuntuacion();
-    muestraCartaPorDefecto();
-    partidaAcabada = false;
-};
-
-// Gestionar click
-const handleClick = (boton: string) => {
-    switch (boton) {
-        case "pedirCarta": {
-            dameCarta();
-            break;
-        }
-        case "mePlanto": {
-            plantarse();
-            break;
-        }
-        case "queHabriaPasado": {
-            queHabriaPasado();
-            break;
-        }
-    }
-};
-
-// Botón pedir carta
-const botonPedirCarta = document.getElementById("pedirCarta");
-botonPedirCarta?.addEventListener("click", () => handleClick("pedirCarta"));
-
-// Botón mePlanto
-const botonMePlanto = document.getElementById("mePlanto");
-botonMePlanto?.addEventListener("click", () => handleClick("mePlanto"));
+}
